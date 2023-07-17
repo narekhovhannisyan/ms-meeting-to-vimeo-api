@@ -2,6 +2,8 @@ import { Vimeo } from '@vimeo/vimeo'
 
 import CONFIG from '../config'
 
+import { UpdateFileDescriptionParams, UpdateDescriptionResponse, UploadFileParams } from '../types/libs/vimeo.typed'
+
 const { VIMEO } = CONFIG
 const { ACCESS_TOKEN, CLIENT_ID, CLIENT_SECRET } = VIMEO
 
