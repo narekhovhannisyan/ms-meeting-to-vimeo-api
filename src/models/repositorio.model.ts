@@ -22,11 +22,11 @@ export const getRepoByMeetingId = (meetingId: string) => {
 export const insertRepoByMeetingId = (meetingId: string): Promise<any> => {
   const withCriteria: FindOrCreateOptions = {
     where: {
-      nombre: meetingId,
-      clave: meetingId,
+      nombre: meetingId, // MEETING ID-MEETING NAME
+      clave: meetingId, // MEETING NAME
       publico: 1,
       activo: 1,
-      url: ''
+      url: meetingId // MEETING NAME (without spaces, with hyphens in lowercase)
     },
     raw: true
   }
