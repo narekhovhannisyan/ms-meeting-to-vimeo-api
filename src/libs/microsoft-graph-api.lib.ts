@@ -55,7 +55,7 @@ const getChatMessages = async (chat: any) => {
 
     return messages.value
   } catch (error) {
-    console.error(error)
+    return []
   }
 }
 
@@ -63,31 +63,36 @@ const getChatMessages = async (chat: any) => {
  * Filters out messages which have call recording event.
  */
 const filterChatMessagesByEvent = (chats: any) => {
-  return chats.map((messagesPerChat: any) => {
+  const filteredChatsByEventDetail = chats.map((messagesPerChat: any) => {
     const filteredMessages = messagesPerChat.filter((message: any) => {
       if (message.eventDetail && message.eventDetail.callRecordingUrl) {
-        return message
+        return message.eventDetail
       }
     })
 
-    return filteredMessages.map((message: any) => message)
-  }).filter((filtered: any) => filtered.length > 0).flat(3)
+    return filteredMessages.map((message: any) => message.eventDetail)
+  })
+
+  return filteredChatsByEventDetail.filter((filtered: any) => filtered.length > 0).flat(4)
 }
 
 /**
  * Get all call recordings URLs.
  */
-const getAllCallRecordings = async () => {
+export const getAllCallRecordings = async () => {
   try {
     const userIds = await getUserIds()
-    const chatsForEachUser = await Bluebird.map(userIds, getUserChats, { concurrency: 3 })
-    // currently done for single user, should be iterated through all users
-    const messagesForSingleUser = await Bluebird.map(chatsForEachUser[0], getChatMessages, { concurrency: 3 })
-    const calls = filterChatMessagesByEvent(messagesForSingleUser)
-    console.log(calls.map((call: any) => call.eventDetail))
+    const chatsForEachUser = await Bluebird.map(userIds, getUserChats, { concurrency: 2 })
+
+    const messagesForAllUsers = await Bluebird.map(chatsForEachUser, async (chatsForSingleUser) => {
+      const messagesForSingleUser = await Bluebird.map(chatsForSingleUser, getChatMessages, { concurrency: 2 })
+      const calls = filterChatMessagesByEvent(messagesForSingleUser)
+
+      return calls
+    }, { concurrency: 2 })
+
+    return messagesForAllUsers.flat(2)
   } catch (error) {
     console.error(error)
   }
 }
-
-getAllCallRecordings()
