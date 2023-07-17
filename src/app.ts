@@ -3,6 +3,7 @@ import helmet from 'helmet'
 import morgan from 'morgan'
 
 import ApiHealth from './api/health'
+import ApiV1 from './api/v1'
 
 import {
   ErrorHandlerMiddleware,
@@ -47,6 +48,11 @@ app.use(helmet())
  * Initialize API Health endpoint.
  */
 app.use('/health', ApiHealth)
+
+/**
+ * Initialize API v1 endpoint.
+ */
+app.use('/api/v1', ApiV1)
 
 /**
  * Handle favicon request.
