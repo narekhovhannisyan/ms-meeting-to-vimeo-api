@@ -25,7 +25,8 @@ export const insertRepoByMeetingId = (meetingId: string): Promise<any> => {
       nombre: meetingId,
       clave: meetingId,
       publico: 1,
-      activo: 1
+      activo: 1,
+      url: ''
     },
     raw: true
   }
