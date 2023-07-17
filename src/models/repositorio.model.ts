@@ -1,16 +1,20 @@
-import { FindOptions } from 'sequelize'
+import { FindOrCreateOptions } from 'sequelize'
+
 import { RepositorioDefinition } from './definitions'
 
 /**
- * Gets repository by given `meetingId`.
+ * Inserts repository by given `meetingId`.
  */
-export const getRepoByMeetingId = (meetingId: string) => {
-  const withCriteria: FindOptions = {
+export const insertRepoByMeetingId = (meetingId: string) => {
+  const withCriteria: FindOrCreateOptions = {
     where: {
-      meetingId,
-      raw: true
-    }
+      nombre: meetingId,
+      clave: meetingId,
+      publico: 1,
+      activo: 1
+    },
+    raw: true
   }
 
-  return RepositorioDefinition.findOne(withCriteria)
+  return RepositorioDefinition.findOrCreate(withCriteria)
 }

@@ -1,4 +1,5 @@
-import { FindOptions } from 'sequelize'
+import { FindOptions, fn, col } from 'sequelize'
+
 import { CalendarioDefinition } from './definitions'
 
 /**
@@ -6,8 +7,7 @@ import { CalendarioDefinition } from './definitions'
  */
 export const getMeetings = () => {
   const withCriteria: FindOptions = {
-    attributes: ['meetingId', 'name', 'date'],
-    raw: true
+    attributes: [[fn('DISTINCT', col('meetingId')), 'meetingId']]
   }
 
   return CalendarioDefinition.findAll(withCriteria)
