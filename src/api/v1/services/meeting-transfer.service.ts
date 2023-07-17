@@ -50,7 +50,7 @@ export const executeStrategy = async (request: Request, response: Response, next
       }
     }
 
-    handleGet(response)('ok')
+    handleGet(response)('OK')
   } catch (error) {
     next(error)
   }
