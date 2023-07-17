@@ -15,7 +15,6 @@ const OPTIONS: Options = {
   logging: false,
   dialect: 'mysql',
   dialectOptions: {
-    useUTC: false,
     multipleStatements: true
   }
 }
