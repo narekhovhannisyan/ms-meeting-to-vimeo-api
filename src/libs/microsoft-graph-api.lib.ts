@@ -80,9 +80,9 @@ const filterChatMessagesByEvent = (chats: any) => {
 const getAllCallRecordings = async () => {
   try {
     const userIds = await getUserIds()
-    const chatsForEachUser = await Bluebird.map(userIds, getUserChats)
+    const chatsForEachUser = await Bluebird.map(userIds, getUserChats, { concurrency: 3 })
     // currently done for single user, should be iterated through all users
-    const messagesForSingleUser = await Bluebird.map(chatsForEachUser[0], getChatMessages)
+    const messagesForSingleUser = await Bluebird.map(chatsForEachUser[0], getChatMessages, { concurrency: 3 })
     const calls = filterChatMessagesByEvent(messagesForSingleUser)
     console.log(calls.map((call: any) => call.eventDetail))
   } catch (error) {
