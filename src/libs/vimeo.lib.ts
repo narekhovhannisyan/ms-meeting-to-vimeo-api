@@ -69,9 +69,6 @@ export const uploadVideo = async (params: UploadFileParams) => {
     )
     console.log(`Uploaded: ${filePath}`)
 
-    const link = await getVideoLink(uri)
-    console.log(`Link: ${link}`)
-
     await updateVideoNameAndDescription({
       uri,
       name,
@@ -80,11 +77,16 @@ export const uploadVideo = async (params: UploadFileParams) => {
 
     const transcodeStatus = await getTranscodeStatus(uri)
     console.log(`The transcode status for ${uri} is: ${transcodeStatus.body.transcode.status}`)
+
+    const link = await getVideoLink(uri)
+    console.log(`Link: ${link}`)
+
+    return link
   } catch (error) {
     if (error instanceof Error) {
       andHandleError(error)
     }
 
-    console.error(error)
+    throw error
   }
 }
