@@ -14,7 +14,7 @@ export const executeStrategy = async (request: Request, response: Response, next
     const meetings = await CalendarioModel.getMeetings()
 
     for (const meeting of meetings) {
-      const meetingId = meeting.getDataValue('meetingid')
+      const meetingId = meeting.meetingId
       const ifExist = await RepositorioModel.getRepoByMeetingId(meetingId)
 
       if (!ifExist) {
