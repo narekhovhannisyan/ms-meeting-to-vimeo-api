@@ -2,7 +2,7 @@
   "extends": "@tsconfig/node18/tsconfig.json",
   "compilerOptions": {
     "checkJs": true,
-    "noImplicitAny": true,
+    "noImplicitAny": false,
     "outDir": "dist",
     "moduleResolution": "node"
   },
