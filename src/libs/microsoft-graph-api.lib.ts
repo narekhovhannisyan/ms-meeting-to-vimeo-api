@@ -1,3 +1,4 @@
+import 'isomorphic-fetch'
 import Bluebird from 'bluebird'
 import { ClientSecretCredential } from '@azure/identity'
 import { Client } from '@microsoft/microsoft-graph-client'
@@ -125,6 +126,33 @@ const appendMeetingCode = async (callRecording: any) => {
 }
 
 /**
+ * Builds call recording link based on call recording url.
+ */
+const buildCallRecordingLink = (callRecordingURL: string) => {
+  const base64URL = Buffer.from(callRecordingURL)
+    .toString('base64')
+    .replace(/\+/g, '-')
+    .replace(/\//g, '_')
+    .replace(/\=+$/, '')
+  const uBase64URL = `u!${base64URL}`
+
+  return uBase64URL
+}
+
+/**
+ * Gets file ReadableStream from Graph API.
+ */
+export const getFileFromGraphAPI = (resourceURL: string) => {
+  try {
+    const base64encoded = buildCallRecordingLink(resourceURL)
+
+    return graphClient.api(`/shares/${base64encoded}/driveItem/content`).get()
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+/**
  * 1. Gets all user ids from organization.
  * 2. Fetches chats for all users.
  * 3. Fetches messages for all chats.
@@ -135,6 +163,7 @@ export const getAllCallRecordings = async () => {
   const concurrency = { concurrency: 2 }
   try {
     const userIds = await getUserIds()
+
     const chatsForEachUser = await Bluebird.map(userIds, getUserChats, concurrency)
     const messagesForAllUsers = await Bluebird.map(chatsForEachUser, async (chatsForSingleUser) => {
       const messagesForSingleUser = await Bluebird.map(chatsForSingleUser, getChatMessages, concurrency)
