@@ -23,7 +23,7 @@ export const executeStrategy = async (request: Request, response: Response, next
         const repository = await RepositorioModel.insertRepoByMeetingId(meetingId)
         const recordings = await getAllCallRecordings()
         console.log('Got call recordings.')
-        const callRecordingData = recordings?.find((recording) => recording.callId === meetingId)
+        const callRecordingData = recordings?.find((recording) => recording.meetingCode === meetingId)
 
         if (callRecordingData) {
           console.log('Download file flow.')
