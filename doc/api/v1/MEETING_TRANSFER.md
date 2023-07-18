@@ -1,11 +1,11 @@
-# Health API
+# Meeting Transfer API
 
 ## Table of Contents
 
-- [Health API](#health-api)
+- [Meeting Transfer API](#meeting-transfer-api)
   - [Table of Contents](#table-of-contents)
   - [Info](#info)
-    - [GET **/health**](#get-health)
+    - [GET **/api/v1/meeting-transfer**](#get-apiv1meeting-transfer)
 
 ## Info
 
@@ -13,7 +13,7 @@ Authorization is not required.
 
 ---
 
-### GET **/health**
+### GET **/api/v1/meeting-transfer**
 
 | Parameter | In  | Required | Default | Type |
 | --------- | --- | -------- | ------- | ---- |
@@ -22,7 +22,7 @@ Authorization is not required.
 Request example:
 
 ```
-POST <YOUR-HOST-HERE>/health
+GET <YOUR-HOST-HERE>/api/v1/meeting-transfer
 ```
 
 Response:

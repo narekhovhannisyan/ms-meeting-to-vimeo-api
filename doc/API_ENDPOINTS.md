@@ -4,10 +4,10 @@
 
 ### Health
 
- * [Health](./api/HEALTH.md)
+ * [Health](./api/health/HEALTH.md)
 
 ### V1
 
- * [<API-NAME-HERE>](./api/*.md)
+ * [Meeting Transfers](./api/v1/MEETING_TRANSFER.md)
 
 *[⬅️ back to the root](/README.md#recording-meetings)*
