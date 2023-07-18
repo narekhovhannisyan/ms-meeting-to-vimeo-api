@@ -1,3 +1,5 @@
+import { path } from 'app-root-path'
+
 export default {
   DATABASE_URL: process.env.DATABASE_URL || '',
   DB: {
@@ -7,6 +9,8 @@ export default {
     PORT: process.env.DB_PORT || 3306,
     NAME: process.env.DB_NAME
   },
+  DOWNLOADS_PATH: `${path}/downloads`,
+  FILE_PATH: (filename: string) => `${path}/downloads/${filename}`,
   MODE: process.env.MODE || 'development',
   MICROSOFT: {
     CLIENT_ID: process.env.MICROSOFT_CLIENT_ID || '',
