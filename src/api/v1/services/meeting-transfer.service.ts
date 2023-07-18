@@ -1,5 +1,4 @@
 import { NextFunction, Request, Response } from 'express'
-import { path } from 'app-root-path'
 
 import { CalendarioModel, RepositorioModel, TemaSubtemaModel } from '../../../models'
 
@@ -9,33 +8,44 @@ import { uploadVideo } from '../../../libs/vimeo.lib'
 
 import { handleGet } from '../../../utils/response-handler.util'
 
+import CONFIG from '../../../config'
+
+const { FILE_PATH } = CONFIG
+
 export const executeStrategy = async (request: Request, response: Response, next: NextFunction) => {
   try {
     const meetings = await CalendarioModel.getMeetings()
     console.log('Meetings fetched.')
+    console.log(meetings)
 
     for (const meeting of meetings) {
       const meetingId = meeting.meetingId
       const ifExist = await RepositorioModel.getRepoByMeetingId(meetingId)
+
+      console.log(ifExist)
 
       if (!ifExist) {
         console.log('Repository check passed.')
         const repository = await RepositorioModel.insertRepoByMeetingId(meetingId)
         const recordings = await getAllCallRecordings()
         console.log('Got call recordings.')
+
+        // recordings[0].meetingCode = meetingId // FOR TESTING BEFORE AZURE FIX
         const callRecordingData = recordings?.find((recording) => recording.meetingCode === meetingId)
 
         if (callRecordingData) {
           console.log('Download file flow.')
           const { callRecordingUrl, callRecordingDisplayName } = callRecordingData
 
-          const filePath = `${path}/downloads/${callRecordingDisplayName}`
+          const response = await downloadFile(callRecordingUrl, callRecordingDisplayName)
 
-          await downloadFile(callRecordingUrl, filePath)
+          if (!response) {
+            return
+          }
 
           console.log('Uploading file.')
           const urlVideo = await uploadVideo({
-            filePath,
+            filePath: FILE_PATH(callRecordingDisplayName),
             name: callRecordingDisplayName,
             description: callRecordingDisplayName
           })
