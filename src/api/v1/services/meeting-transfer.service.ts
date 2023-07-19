@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { NextFunction, Request, Response } from 'express'
 
 import { CalendarioModel, RepositorioModel, TemaSubtemaModel } from '../../../models'
@@ -30,12 +31,14 @@ export const executeStrategy = async (request: Request, response: Response, next
         const recordings = await getAllCallRecordings()
         console.log('Got call recordings.')
 
-        // recordings[0].meetingCode = meetingId // FOR TESTING BEFORE AZURE FIX
+        // @ts-ignore
+        recordings[5].meetingCode = meetingId // FOR TESTING BEFORE AZURE FIX
         const callRecordingData = recordings?.find((recording) => recording.meetingCode === meetingId)
 
         if (callRecordingData) {
           console.log('Download file flow.')
           const { callRecordingUrl, callRecordingDisplayName } = callRecordingData
+          console.log(callRecordingUrl)
 
           const response = await downloadFile(callRecordingUrl, callRecordingDisplayName)
 
