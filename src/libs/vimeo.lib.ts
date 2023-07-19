@@ -48,12 +48,6 @@ const updateVideoNameAndDescription = (data: UpdateFileDescriptionParams): Promi
 }
 
 /**
- * Gets transcoding status for given `uri`.
- */
-const getTranscodeStatus = (uri: string) => client.request(`${uri}?fields=transcode.status`)
-  .then((response: any) => response.body.transcode.status)
-
-/**
  * Upload file with given path.
  */
 export const uploadVideo = async (params: UploadFileParams) => {
@@ -76,9 +70,6 @@ export const uploadVideo = async (params: UploadFileParams) => {
       name,
       description
     })
-
-    const transcodeStatus = await getTranscodeStatus(uri)
-    console.log(`The transcode status for ${uri} is: ${transcodeStatus.body.transcode.status}`)
 
     const link = await getVideoLink(uri)
     console.log(`Link: ${link}`)
