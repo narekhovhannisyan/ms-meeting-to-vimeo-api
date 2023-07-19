@@ -1,4 +1,6 @@
-import 'isomorphic-fetch'
+import { createWriteStream } from 'fs'
+
+import axios from 'axios'
 import Bluebird from 'bluebird'
 import { ClientSecretCredential } from '@azure/identity'
 import { Client } from '@microsoft/microsoft-graph-client'
@@ -6,7 +8,7 @@ import { TokenCredentialAuthenticationProvider } from '@microsoft/microsoft-grap
 
 import CONFIG from '../config'
 
-const { MICROSOFT } = CONFIG
+const { MICROSOFT, DOWNLOADS_PATH } = CONFIG
 const { TENANT_ID, CLIENT_ID, CLIENT_SECRET, SCOPES } = MICROSOFT
 
 const credential = new ClientSecretCredential(
@@ -142,11 +144,27 @@ const buildCallRecordingLink = (callRecordingURL: string) => {
 /**
  * Gets file ReadableStream from Graph API.
  */
-export const getFileFromGraphAPI = (resourceURL: string) => {
+export const getFileFromGraphAPI = async (resourceURL: string, fileName: string) => {
   try {
     const base64encoded = buildCallRecordingLink(resourceURL)
+    const filePath = `${DOWNLOADS_PATH}/${fileName}`
 
-    return graphClient.api(`/shares/${base64encoded}/driveItem/content`).get()
+    const token = await authProvider.getAccessToken()
+
+    const response = await axios.get(`https://graph.microsoft.com/v1.0/shares/${base64encoded}/driveItem/content`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      },
+      responseType: 'stream'
+    })
+
+    const fileStream = createWriteStream(filePath)
+    response.data.pipe(fileStream)
+
+    return new Promise((resolve, reject) => {
+      fileStream.on('finish', () => resolve(filePath))
+      fileStream.on('error', reject)
+    })
   } catch (error) {
     console.error(error)
   }
