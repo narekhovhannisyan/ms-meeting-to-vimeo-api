@@ -1,22 +1,19 @@
-import http from 'http'
 import fs from 'fs'
 
-export const downloadFile = (url: string, path: string) => {
-  const file = fs.createWriteStream(path)
+import CONFIG from '../config'
 
-  return new Promise((resolve, reject) => {
-    http.get(url, function (response) {
-      response.pipe(file)
+import { getFileFromGraphAPI } from './microsoft-graph-api.lib'
 
-      file.on('finish', () => {
-        file.close()
+const { DOWNLOADS_PATH } = CONFIG
 
-        return resolve('done')
-      })
+export const downloadFile = async (url: string, fileName: string) => {
+  try {
+    if (!fs.existsSync(DOWNLOADS_PATH)){
+      fs.mkdirSync(DOWNLOADS_PATH)
+    }
 
-      file.on('error', (error) => {
-        return reject(error)
-      })
-    })
-  })
+    return getFileFromGraphAPI(url, fileName)
+  } catch (error) {
+    console.error(error)
+  }
 }
