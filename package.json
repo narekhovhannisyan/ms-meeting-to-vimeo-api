@@ -1,5 +1,5 @@
 {
-  "name": "recording-meetings",
+  "name": "ms-meeting-to-vimeo-api",
   "description": "Microsoft meeting distribution app.",
   "version": "0.0.0",
   "author": {
@@ -8,7 +8,7 @@
     "url": "https://github.com/narekhovhannisyan"
   },
   "bugs": {
-    "url": "https://gitlab.com/internos2/recording-meetings/-/issues"
+    "url": "https://github.com/narekhovhannisyan/ms-meeting-to-vimeo-api/issues"
   },
   "contributors": [
     {
@@ -54,17 +54,17 @@
     "node": "18.16.1",
     "npm": "9.5.1"
   },
-  "homepage": "https://gitlab.com/internos2/recording-meetings/-/blob/main/README.md",
+  "homepage": "https://github.com/narekhovhannisyan/ms-meeting-to-vimeo-api/README.md",
   "keywords": [
     "microsoft",
     "teams",
     "vimeo"
   ],
   "main": "src/bin/www.ts",
-  "private": true,
+  "private": false,
   "repository": {
     "type": "git",
-    "url": "https://gitlab.com/internos2/recording-meetings.git"
+    "url": "https://github.com/narekhovhannisyan/ms-meeting-to-vimeo-api/.git"
   },
   "scripts": {
     "build": "tsc",
