@@ -1,4 +1,4 @@
-# recording-meetings
+# ms-meeting-to-vimeo-api
 
 This API helps you to store Microsoft Meeting Videos directly to Vimeo using their APIs.
 
