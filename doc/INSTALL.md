@@ -21,4 +21,4 @@ $ npm build // create js build from ts
 $ npm start
 ```
 
-*[⬅️ back to the root](/README.md#recording-meetings)*
+*[⬅️ back to the root](/README.md#ms-meeting-to-vimeo-api)*

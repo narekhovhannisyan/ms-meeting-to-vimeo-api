@@ -10,4 +10,4 @@
 
  * [Meeting Transfers](./api/v1/MEETING_TRANSFER.md)
 
-*[⬅️ back to the root](/README.md#recording-meetings)*
+*[⬅️ back to the root](/README.md#ms-meeting-to-vimeo-api)*

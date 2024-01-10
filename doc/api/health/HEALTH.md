@@ -37,4 +37,4 @@ Response:
 
 **[⬆ back to the top](#table-of-contents)**
 
-*[⬅️ back to the root](/README.md#recording-meetings)*
+*[⬅️ back to the root](/README.md#ms-meeting-to-vimeo-api)*

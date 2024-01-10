@@ -1,14 +1,14 @@
-# Contributing to recording-meetings
+# Contributing to ms-meeting-to-vimeo-api
 
 ## Code Contributions
 
 #### Step 1: Clone
 
-Clone the project on [GitLab](https://gitlab.com/internos2/recording-meetings.git)
+Clone the project on [GitHub](https://github.com/narekhovhannisyan/ms-meeting-to-vimeo-api.git)
    
    ```bash
-   $ git clone https://gitlab.com/internos2/recording-meetings.git
-   $ cd recording-meetings
+   $ git clone https://github.com/narekhovhannisyan/ms-meeting-to-vimeo-api.git
+   $ cd ms-meeting-to-vimeo-api
    ```
    
 For developing new features and bug fixes, the development branch should be pulled and built upon.
@@ -103,4 +103,4 @@ The commit message should describe what changed and why.
         - add JSDoc on existing function
       ```
 
-*[⬅️ back to the root](/README.md#recording-meetings)*      
+*[⬅️ back to the root](/README.md#ms-meeting-to-vimeo-api)*      
